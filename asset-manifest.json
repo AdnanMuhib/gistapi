@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.js": "/gistapi/static/js/main.5195f2b3.chunk.js",
+    "main.js.map": "/gistapi/static/js/main.5195f2b3.chunk.js.map",
+    "runtime-main.js": "/gistapi/static/js/runtime-main.65d4b602.js",
+    "runtime-main.js.map": "/gistapi/static/js/runtime-main.65d4b602.js.map",
+    "static/css/2.ad1edcb9.chunk.css": "/gistapi/static/css/2.ad1edcb9.chunk.css",
+    "static/js/2.2fe05c86.chunk.js": "/gistapi/static/js/2.2fe05c86.chunk.js",
+    "static/js/2.2fe05c86.chunk.js.map": "/gistapi/static/js/2.2fe05c86.chunk.js.map",
+    "index.html": "/gistapi/index.html",
+    "static/css/2.ad1edcb9.chunk.css.map": "/gistapi/static/css/2.ad1edcb9.chunk.css.map",
+    "static/js/2.2fe05c86.chunk.js.LICENSE.txt": "/gistapi/static/js/2.2fe05c86.chunk.js.LICENSE.txt",
+    "static/media/octicons.css": "/gistapi/static/media/octicons.f9ced0fc.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.65d4b602.js",
+    "static/css/2.ad1edcb9.chunk.css",
+    "static/js/2.2fe05c86.chunk.js",
+    "static/js/main.5195f2b3.chunk.js"
+  ]
+}
