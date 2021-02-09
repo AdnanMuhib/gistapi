@@ -1,19 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import Octicon from "react-octicon";
 
+// placeholder avatar in case of missing avatar for any user
 const default_avatar_url =
   "https://avatars.githubusercontent.com/u/42755256?s=60&v=4";
 
 const GistHeader = ({ gist_owner, gist_meta }) => {
+  // retrieve gist author info from the owner object
   const {
     avatar_url = default_avatar_url,
     login: user_name,
     html_url: profile_link,
   } = gist_owner;
-  const files = Object.keys(gist_meta.files);
+  // Get the Files Count
+  const files = Object.keys(gist_meta.files).length;
+  // Get Timestamps and format them
   const created_at = new Date(gist_meta.created_at).toLocaleDateString("en-US");
   const updated_at = new Date(gist_meta.updated_at).toLocaleDateString("en-US");
+
   return (
     <>
       <GistWrapper>
@@ -28,7 +34,7 @@ const GistHeader = ({ gist_owner, gist_meta }) => {
         <GistRightMeta>
           <Link href={gist_meta.html_url} target="new">
             <Octicon name="code">
-              {files.length} {files.length <= 1 ? "File " : "Files"}
+              {files} {files <= 1 ? "File " : "Files"}
             </Octicon>
           </Link>
           <Link href={`${gist_meta.html_url}/forks`} target="new">
@@ -105,4 +111,11 @@ export const Link = styled.a`
   text-decoration: none;
   color: #0366d6;
 `;
+
+// Props Params checking
+GistHeader.propTypes = {
+  gist_owner: PropTypes.object.isRequired,
+  gist_meta: PropTypes.object.isRequired,
+};
+
 export default GistHeader;

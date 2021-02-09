@@ -1,9 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import Octicon from "react-octicon";
+// custom imports
 import GistHeader, { Link } from "./GistHeader";
+
 const Gist = ({ gist }) => {
+  // get owner/author data of the gist
   const { owner: gist_owner } = gist;
+  // get the meta data of the gist
   const {
     description = "",
     created_at,
@@ -14,7 +19,7 @@ const Gist = ({ gist }) => {
     comments_url,
     html_url = "#",
   } = gist;
-
+  // retrieve only File Names from the object of files
   const fileNames = Object.keys(files);
 
   return (
@@ -46,8 +51,6 @@ const Gist = ({ gist }) => {
   );
 };
 
-export default Gist;
-
 const GistDescription = styled.p`
   padding-left: 15px;
   width: 100%;
@@ -68,3 +71,9 @@ const GistFiles = styled.div`
 const Separator = styled.hr`
   border;0.5px solid lightgray;
 `;
+
+Gist.propTypes = {
+  gist: PropTypes.object.isRequired,
+};
+
+export default Gist;

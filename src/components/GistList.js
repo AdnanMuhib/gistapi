@@ -1,32 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { getPublicGists } from "../services/gistService";
-import Gist from "./Gist";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const GistList = () => {
+// custom imports
+import { getPublicGists, getGistForUser } from "../services/gistService";
+import Gist from "./Gist";
+
+const GistList = ({ searchUserName }) => {
   const [gists, setGists] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    getPublicGists()
-      .then((response) => {
-        setGists(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
-  }, []);
+    // Clear Error Before the API Call
+    setErrorMsg("");
+    // when trying to search the gists by User Name
+    if (searchUserName) {
+      getGistForUser(searchUserName)
+        .then((response) => {
+          setGists(response.data);
+          // if there are no gists then throw Error
+          if (response.data.length < 1) {
+            throw new Error(`No Gists Found for ${searchUserName}`);
+          }
+        })
+        .catch((err) => {
+          // Set the Error Message in case of API call fails
+          // or there are no gists
+          setErrorMsg(err.message);
+        });
+
+      // when not searching by username
+    } else {
+      getPublicGists()
+        .then((response) => {
+          setGists(response.data);
+        })
+        .catch((err) => {
+          setErrorMsg(err.message);
+        });
+    }
+  }, [searchUserName]);
 
   return (
-    <GistListWrapper>
-      {gists.map((gist) => {
-        return <Gist key={gist.id} gist={gist} />;
-      })}
-    </GistListWrapper>
+    <Wrapper>
+      {!errorMsg ? (
+        gists.map((gist) => {
+          return <Gist key={gist.id} gist={gist} />;
+        })
+      ) : (
+        <ErrorMessage>{errorMsg}</ErrorMessage>
+      )}
+    </Wrapper>
   );
 };
 
-const GistListWrapper = styled.div`
+const Wrapper = styled.div`
   width: 60%;
   margin-left: auto;
   margin-right: auto;
@@ -35,4 +63,15 @@ const GistListWrapper = styled.div`
     padding: 20px;
   }
 `;
+const ErrorMessage = styled.div`
+  text-align: center;
+  color: red;
+  font-size: xx-large;
+  margin: auto;
+`;
+// Prop Param Type Checking
+GistList.propTypes = {
+  searchUserName: PropTypes.string,
+};
+
 export default GistList;
