@@ -6,7 +6,11 @@ const default_avatar_url =
   "https://avatars.githubusercontent.com/u/42755256?s=60&v=4";
 
 const GistHeader = ({ gist_owner, gist_meta }) => {
-  const { avatar_url = default_avatar_url, login: user_name } = gist_owner;
+  const {
+    avatar_url = default_avatar_url,
+    login: user_name,
+    html_url: profile_link,
+  } = gist_owner;
   const files = Object.keys(gist_meta.files);
   const created_at = new Date(gist_meta.created_at).toLocaleDateString("en-US");
   const updated_at = new Date(gist_meta.updated_at).toLocaleDateString("en-US");
@@ -14,16 +18,28 @@ const GistHeader = ({ gist_owner, gist_meta }) => {
     <>
       <GistWrapper>
         <GistLeftMeta>
-          <UserImage src={avatar_url} alt="avatar" />
-          <UserName>{user_name}</UserName>
+          <Link href={profile_link} target="new">
+            <UserImage src={avatar_url} alt="avatar" />
+          </Link>
+          <Link href={profile_link} target="new">
+            <UserName>{user_name}</UserName>
+          </Link>
         </GistLeftMeta>
         <GistRightMeta>
-          <Octicon name="code">
-            {files.length} {files.length <= 1 ? "File " : "Files"}
-          </Octicon>
-          <Octicon name="repo-forked"> Forks</Octicon>
-          <Octicon name="comment"> {gist_meta.comments} Comments</Octicon>
-          <Octicon name="star"> Stars</Octicon>
+          <Link href={gist_meta.html_url} target="new">
+            <Octicon name="code">
+              {files.length} {files.length <= 1 ? "File " : "Files"}
+            </Octicon>
+          </Link>
+          <Link href={`${gist_meta.html_url}/forks`} target="new">
+            <Octicon name="repo-forked"> Forks</Octicon>
+          </Link>
+          <Link href={`${gist_meta.html_url}/#comments`} target="new">
+            <Octicon name="comment"> {gist_meta.comments} Comments</Octicon>
+          </Link>
+          <Link href={`${gist_meta.html_url}/stargazers`} target="new">
+            <Octicon name="star"> Stars</Octicon>
+          </Link>
         </GistRightMeta>
       </GistWrapper>
       <GistWrapper>
@@ -56,7 +72,6 @@ const GistLeftMeta = styled(GistMeta)`
   float: left;
   width: 50%;
   @media (max-width: 768px) {
-    display: block;
     width: 100%;
   }
 `;
@@ -64,8 +79,9 @@ const GistLeftMeta = styled(GistMeta)`
 const GistRightMeta = styled(GistMeta)`
   float: right;
   width: 50%;
+  & > a,
   & > span {
-    margin-right: 10px;
+    margin-right: 15px;
   }
   @media (max-width: 768px) {
     float: left;
@@ -84,5 +100,9 @@ const GistWrapper = styled.div`
     width: 100%;
     float: left;
   }
+`;
+export const Link = styled.a`
+  text-decoration: none;
+  color: #0366d6;
 `;
 export default GistHeader;
