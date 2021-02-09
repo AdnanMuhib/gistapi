@@ -25,6 +25,7 @@ const Gist = ({ gist }) => {
           forks_url,
         }}
       />
+      <hr />
     </div>
   );
 };
