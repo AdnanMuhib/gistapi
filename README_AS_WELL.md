@@ -2,6 +2,7 @@
 This Gists App is based on the forked copy of [this project](https://github.com/dubizzle-onboarding/gistapi).
 It uses Github's [Octokit REST API](https://octokit.github.io/rest.js/v18/)
 
+[See Live Demo](https://adnanmuhib.github.io/gistapi/)
 ## Features
 - Get and display a list of 30 most recent public gists on Github
 - Display meta data about the gist which includes:
